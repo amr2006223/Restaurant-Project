@@ -9,7 +9,11 @@
 <?php
 include "database.php";
 
+$FirstError ="";
+$SecondError ="";
+$AddressError ="";
 $emailError="";
+$PasswordError ="";
 $fileError ="";
 
 
@@ -17,9 +21,30 @@ $fileError ="";
 if(isset($_POST['Submit']))
 { //check if form was submitted
 	$check = true;
+	
+	if(empty($_POST['FirstName']))
+	{
+		$FirstError="First Name is required";
+		$check = false;
+	}
+	if(empty($_POST['SecondName']))
+	{
+		$SecondError="Second Name is required";
+		$check = false;
+	}
+	if(empty($_POST['Address']))
+	{
+		$AddressError="Address is required";
+		$check = false;
+	}
 	if(empty($_POST['Email']))
 	{
 		$emailError="Email is required";
+		$check = false;
+	}
+	if(empty($_POST['Password']))
+	{
+		$PasswordError="Password is required";
 		$check = false;
 	}
 	if(empty($_FILES['nationalID']['name']))
@@ -65,22 +90,4 @@ if(isset($_POST['Submit']))
 }
 ?>
 
-<?php include "menu.php";?>
-
-<h1>SignUp</h1>
-<form action="" method="post" enctype="multipart/form-data">
-	Name:<br>
-    <input type="text" name="Name"><br>
-    Email:<br>
-    <input type="text" name="Email"> <?php echo $emailError; ?><br>
-    Address:<br>
-    <input type="text" name="Address"><br>
-    Password:<br>
-    <input type="Password" name="Password"><br>
-    Upload your National id: <input type="file" name='nationalID'> <?php echo $fileError ?>
-    <br>
-    <input class = 'btn btn-full' type="submit" value="Submit" name="Submit">
-    <input class = 'btn btn-full' type="reset">
-</form>
-
-</html>
+<?php //include "menu.php";?>
