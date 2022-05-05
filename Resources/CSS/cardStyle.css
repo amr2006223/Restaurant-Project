@@ -1,0 +1,11 @@
+.all-card{
+    display: inline;
+    float: left;
+    height: 100%;
+    width: 100%;
+}
+.each-card-0{
+padding: 5%;
+    display: inline;
+    float: left;
+}

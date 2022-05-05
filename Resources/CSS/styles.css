@@ -1,8 +1,10 @@
+
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
 html{
     background-color: #fff;
     color: #555;
@@ -12,30 +14,57 @@ html{
     text-rendering: optimizeLegibility;
 }
 
-.row{
-    max-width: 1140px;
-    margin: 0 auto;
-}
-
-header{
-background-image: linear-gradient(rgba(0, 0, 0, 0.432), rgba(0, 0, 0, 0.432)), url(img/hero.jpg);
-background-size: cover;
-background-position: center;
-height: 100vh;
-
-}
-
 .hero-text-box{
     position: absolute;
-    width:1140px;
+    width:auto;
     top: 35%;
-    left: 50%;
+    margin-left: 35%;
+    /*moves an the textbox on the img with the bottoms*/
     transform: translate(-50%,-50%);
 }
 
+/*header*/
+header{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.651), rgba(0, 0, 0, 0.432)), url(img/hero.jpg);
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}
+/*navigation bar and logo*/
+.logo{
+    margin-top: 20px;
+    margin-left: 10%;
+height: 100px;
+float: left;
+width:auto;
+}
 
+.main-Nav{
+    float: right;
+    list-style: none;
+}
+
+.main-Nav li{
+    display: inline-block;
+    margin-right: 55px;
+    margin-top: 40px;
+    
+    
+}
+.main-Nav li a:link, 
+.main-Nav li a:visited{
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 90%;
+}
+
+.main-Nav li a:hover{
+    color: rgba(255, 255, 255, 0.386);
+    transition: .5s;
+}
 h1{
-
+    
     margin-top: 0;
     margin-bottom: 20px;
     color: #fff;
@@ -47,6 +76,7 @@ h1{
     
 }
 
+/*the 2 buttons (can be reused on other pages)*/
 .btn:link,
 .btn:visited {
     display: inline-block;
@@ -58,7 +88,6 @@ h1{
     margin-top: 1%;
 
 }
-
 .btn-full:link,
 .btn-full:visited
 {
