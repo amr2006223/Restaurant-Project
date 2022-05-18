@@ -67,7 +67,7 @@ if(isset($_POST['Submit']))
 		$row = mysqli_fetch_array($result2);
 		
 		//insert data into the database
-		$sql="insert into user (fname, Email, Password, Address, image) 
+		$sql = "insert into user (fname, Email, Password, Address, image) 
 		VALUES ('$name', '$email', '$pass', '$address','$image');";
 		
 		if($row[0] > 0) {
