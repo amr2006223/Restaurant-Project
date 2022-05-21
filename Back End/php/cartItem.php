@@ -9,7 +9,8 @@ function cart_item($tablename,$id,$conn,$quantity)
            $productname = $row['name'];
            $productprice = $row['price'];
 
-           $element = " <form action='' method='post' class='cart-items'>
+           $element = "
+            <form action='' method='post' class='cart-items'>
            <div class='border rounded col-md-12' id ='item'>
                         <div class='row bg-white'>
                             <div class='col-md-4 pl-0'>

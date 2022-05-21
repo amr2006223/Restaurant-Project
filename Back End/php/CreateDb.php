@@ -17,8 +17,6 @@ function getData($tablename,$conn){
     if(mysqli_num_rows($result)>0){
         return($result);
     }
-
-
 }
 /*
  class CreateDb{
