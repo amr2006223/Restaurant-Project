@@ -101,7 +101,7 @@ else if(isset($_POST['Compose_submit'])){
 // huge error it keeps adding stuff again and again without checking if it is in the array
 if(isset($_POST['add'])){
 if(isset($_SESSION['cart'])){
-    if(array_search($_POST['product_id'], array_column($_SESSION['cart'], 'product_id')) || array_search($_POST['product_id'], array_column($_SESSION['cart'], 'product_id')) == 0){ //when it retunrs the first index so it add it again???
+    if(array_search($_POST['product_id'], array_column($_SESSION['cart'], 'product_id')) ){ //when it retunrs the first index so it add it again???
         $element = 
         "<div class='center' id = 'center'>
         <div class='content'>
