@@ -33,7 +33,16 @@ margin-bottom: 20%;
 
 
 
-
+.card{
+    padding-top: none;
+    overflow: auto;
+    background-color: white;
+    text-align: center;
+    width:250px;
+    height: 400px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+}
 
 
 
@@ -43,11 +52,9 @@ margin-bottom: 20%;
 
 
 body{
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
+
     background: linear-gradient(#E0EAFC,#CFDED3);
-    height: 100vh;
+
 }
 .center,.content{
     position: absolute;
@@ -160,4 +167,6 @@ background:orange ;
 color: white;
 transition: .5s;
 }
-
+.shadow{
+    padding-top: 3%;
+}

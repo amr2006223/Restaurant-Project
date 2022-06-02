@@ -86,6 +86,7 @@ h1{
     border-radius: 200px;
     transition: background-color 0.3s, border 0.3s, color 0.3s;
     margin-top: 1%;
+    text-decoration: none;
 
 }
 .btn-full:link,

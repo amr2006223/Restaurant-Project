@@ -34,10 +34,7 @@ function cart_item($tablename,$id,$conn,$quantity)
                 </div>";
        
                 echo $element;
-        }
-        else{
-            die('error in getting data');
-        }   
+        }  
    }
    else
    {

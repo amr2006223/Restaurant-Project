@@ -1,11 +1,12 @@
 <?php
-function block($id,$conn){
+function block($id, $conn)
+{
     $sql = "select * from cashier where id = '$id'";
-    $result = mysqli_query($conn,$sql);
+    $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
-    if($result){
-         $id2 = $row['firstname'];
-            echo "
+    if ($result) {
+        $id2 = $row['firstname'];
+        echo "
             <div class='center' id = 'center'>
             <div class='content'>
             <div class='head' style = '  height: 68px; background: orange; overflow: hidden; border-radius: 3px 3px 0 0; box-shadow: 0 2px 3px 0 rgba(0,0,0,.2);'>
@@ -25,33 +26,36 @@ function block($id,$conn){
             </div>";
         $_SESSION['id'] = $id;
         $sql3 = "UPDATE cashier set status = '0' where id = $id";
-        $result3 = mysqli_query($conn,$sql3);
-        if($result3){
-
-            $sql2 = "INSERT INTO blocked(id)
-        VALUES ($id);";
-        $result2 = mysqli_query($conn,$sql2);
-        if(!$result2){
-            echo "error"; 
+        $result3 = mysqli_query($conn, $sql3);
+        if ($result3) {
+            $date = date('d-m-y h:m:sa');
+            $date2 = new DateTime($date);
+            $stringDate = $date2->format('Y-m-d H:i:s');
+            $sql2 = "INSERT INTO blocked(id,date)
+                    VALUES ($id,'$stringDate');";
+            $result2 = mysqli_query($conn, $sql2);
+            if (!$result2) {
+                echo "error";
+            }
         }
-    }
-    }else{
+    } else {
         echo "<script>alert('error in database or id was not found')</script>;";
     }
 }
-function unblock($id,$conn){
+function unblock($id, $conn)
+{
     $sql = "select * from cashier where id = '$id'";
-    $result = mysqli_query($conn,$sql);
+    $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
-    if($result){
-        
+    if ($result) {
+
         $_SESSION['id'] = $id;
         $sql3 = "UPDATE cashier set status = '1' where id = $id";
-        $result3 = mysqli_query($conn,$sql3);
-        if($result3){
+        $result3 = mysqli_query($conn, $sql3);
+        if ($result3) {
             $sql2 = "DELETE from blocked where id = '$id'";
-            $result2 = mysqli_query($conn,$sql2);
-            if($result2){
+            $result2 = mysqli_query($conn, $sql2);
+            if ($result2) {
                 $id2 = $row['firstname'];
                 echo "
                 <div class='center' id = 'center'>
@@ -70,16 +74,17 @@ function unblock($id,$conn){
                 </div>
                 </div>";
             }
-        }else{
+        } else {
 
             echo "<script>alert('error in database or id was not found')</script>;";
         }
-    }else{
+    } else {
         echo "<script>alert('error in database or id was not found')</script>;";
     }
 }
-function data($id,$firstname,$secondname,$username,$status,$status1){
-   echo " 
+function data($id, $firstname, $secondname, $username, $status, $status1)
+{
+    echo " 
    <form action = '' method = 'post'>
    <tr class = '$id'>
     <td>$id</td>
@@ -90,31 +95,31 @@ function data($id,$firstname,$secondname,$username,$status,$status1){
     <td><input type = 'submit' class = 'link' name = 'delete' value = 'Delete' ></td>
     <td><input type = 'submit'  color:black;' class = 'link' name = 'Edit' value = 'Edit'></td>
     <input type = 'hidden'  name = 'id' value = '$id'>";
-if($status == 1){
-   echo"
+    if ($status == 1) {
+        echo "
     <td><input type = 'submit'  border:none; color:black;' class = 'block' name = 'block' value = 'block'></td>";
-}else
-{
-    echo "
-    <td><input type = 'submit'  color:black;' class = 'unblock' name = 'unblock' value = 'unblock'></td>"; 
-}
-echo "<td>
+    } else {
+        echo "
+    <td><input type = 'submit'  color:black;' class = 'unblock' name = 'unblock' value = 'unblock'></td>";
+    }
+    echo "<td>
     <input type = 'submit'  color:black;' class = 'link' name = 'promote' value = 'promote'>
     </td>
     </tr>";
-echo "</form>";
+    echo "</form>";
 }
-function promote($id,$conn){
+function promote($id, $conn)
+{
     $sql = "select * from cashier where id = '$id'";
-    $result = mysqli_query($conn,$sql);
-    if($result){
+    $result = mysqli_query($conn, $sql);
+    if ($result) {
         $row = mysqli_fetch_assoc($result);
         $fname = $row['firstname'];
         $sname = $row['secondname'];
         $uname = $row['username'];
         $pass = $row['password'];
         $status = $row['status'];
-        if($status == 0){
+        if ($status == 0) {
             echo "
                 <div class='center' id = 'center'>
                 <div class='content'>
@@ -131,14 +136,13 @@ function promote($id,$conn){
                 </form>
                 </div>
                 </div>";
-        }
-        else{
+        } else {
 
-        
-        $sql2 = "insert into QualityControl (firstname,secondname,username,password) values ('$fname','$sname','$uname','$pass')";
-        $result2 = mysqli_query($conn,$sql2);
-        if($result2){
-            echo "
+
+            $sql2 = "insert into QualityControl (firstname,secondname,username,password) values ('$fname','$sname','$uname','$pass')";
+            $result2 = mysqli_query($conn, $sql2);
+            if ($result2) {
+                echo "
                 <div class='center' id = 'center'>
                 <div class='content'>
                 <div class='head' style = 'height: 68px; background: orange; overflow: hidden; border-radius: 3px 3px 0 0; box-shadow: 0 2px 3px 0 rgba(0,0,0,.2);'>
@@ -154,13 +158,12 @@ function promote($id,$conn){
                 </form>
                 </div>
                 </div>";
-            
-            $sql3 = "delete from cashier where id = '$id'";
-            $result3 = mysqli_query($conn,$sql3);
-            if($result3){
-               
-            }else{
-                echo "
+
+                $sql3 = "delete from cashier where id = '$id'";
+                $result3 = mysqli_query($conn, $sql3);
+                if ($result3) {
+                } else {
+                    echo "
                 <div class='center' id = 'center'>
                 <div class='content'>
                 <div class='head' style = '  height: 70px;background-color: red; overflow: hidden; border-radius: 3px 3px 0 0; box-shadow: 0 2px 3px 0 rgba(0,0,0,.2);'>
@@ -176,16 +179,17 @@ function promote($id,$conn){
                 </form>
                 </div>
                 </div>";
+                }
             }
-        }
         }
     }
 }
 
-function delete($id,$conn){
+function delete($id, $conn)
+{
     $sql = "select * from cashier where id ='$id'";
-    $result = mysqli_query($conn,$sql);
-    if($result){
+    $result = mysqli_query($conn, $sql);
+    if ($result) {
         $row = mysqli_fetch_assoc($result);
         $fname = $row['firstname'];
         echo "
@@ -208,4 +212,19 @@ function delete($id,$conn){
         </div>";
     }
 }
-?>
+function encrypt($string,$enc_iv,$key){
+    $ciphering = "AES-128-CTR";
+    $iv_length = openssl_cipher_iv_length($ciphering);
+    $options = 0;
+    $string2 = openssl_encrypt($string, $ciphering,
+    $key, $options, $enc_iv);
+    return $string2;
+}
+function decrypt($string,$dec_iv,$key){
+    $ciphering = "AES-128-CTR";
+    $iv_length = openssl_cipher_iv_length($ciphering);
+    $options = 0;
+    $string2 = openssl_decrypt($string, $ciphering,
+    $key, $options, $dec_iv);
+    return $string2;
+}
