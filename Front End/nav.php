@@ -7,7 +7,7 @@ echo "<header>
             <li><a href='http://localhost/Restaurant-Project/Home.html'>Home</a></li>                        
             <li><a href='SignUp.html'>Sign Up</a></li>                        
             <li><a href='Login.html'>Login</a></li>                        
-            <li><a href='http://localhost/Restaurant-Project/Admin.php'>Admin</a></li>                                           
+            <li><a href='homeAdmin.php'>Admin</a></li>                                           
             <li><a href='Menu.php'>Menu</a></li>                                           
             <li><a href='ContactUs.html'>Contact Us</a></li>                                
         </ul>
