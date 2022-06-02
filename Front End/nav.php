@@ -1,5 +1,6 @@
 <?php
-echo "<header>
+echo "
+<header>
 <nav>
     <div class = 'nave'>
         <img class = 'logo' src= 'http://localhost/Restaurant-Project/Resources/Imgs/logo-white.png' alt='logo'>
@@ -12,6 +13,13 @@ echo "<header>
             <li><a href='ContactUs.html'>Contact Us</a></li>                                
         </ul>
     </div>
+    ";
+    if(isset($_SESSION['o'])){
+
+        echo "<a class = 'btn btn-full hold' href = 'Back End/php/cart.php' class = 'cart'>Cart</a>";
+    }
+
+    echo "
 </nav>
 </header>";
 ?>
