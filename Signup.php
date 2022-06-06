@@ -49,7 +49,7 @@
         height: 780px;
         padding-top: 30px;
         border-radius: 30px;
-        width: 34%;
+        width: 40%;
     }
 
     .edit {
@@ -203,10 +203,11 @@
         border-radius: 3px 3px 0 0;
         box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .2);
     }
-    .warning{
+
+    .warning {
         font-size: small;
         text-align: left;
-        color:red;
+        color: red;
         height: 1px;
         margin-bottom: 20px;
         margin-top: -10px;
@@ -214,10 +215,10 @@
 </style>
 
 <body>
-    <?php 
-        include "Front End/nav.php" ;
-        include "Back End/php/CreateDb.php";
-        include "Back End/php/functions.php";
+    <?php
+    include "Front End/nav.php";
+    include "Back End/php/CreateDb.php";
+    include "Back End/php/functions.php";
     ?>
     <?php
     if (isset($_POST['sub'])) {
@@ -238,14 +239,14 @@
         $_SESSION['nationalId'] = $nationalid;
 
 
-        $password2 = encrypt($password,'1234567891011121','WebProject');
+        $password2 = encrypt($password, '1234567891011121', 'WebProject');
         /*
         $sql = "select * from user where username = '$username' or email = '$email'";
         $result = mysqli_query($conn,$sql);
         $row_num = mysqli_num_rows($result);
        // if($num)
         */
-        $sql2 = "INSERT into user (firstname,secondname,email,username,password,nationalId) VALUES ($firstname,$secondname,$email,$username,$password2,$nationalid)";
+        $sql2 = "INSERT into users (firstname,secondname,email,username,password,nationalId) VALUES ('$firstname','$secondname','$email','$username','$password2','$nationalid')";
         $result2 = mysqli_query($conn, $sql2);
         if ($result2) {
             echo "
@@ -254,65 +255,70 @@
             <div class='header'>
             <h2 style = 'text-align: center'>Success</h2>
             </div>
-            <p>Cashier Updated Successfuly</p>
+            <p>You have signed up sucessfully</p>
             <div class='line'></div>
-            <a href = 'Admin.php' onclick='change_id()' class = 'close-btn' > Close </a>
+            <a href = 'Home.html' onclick='change_id()' class = 'close-btn' > Close </a>
             </div>
             </div>";
+            $sql3 = "select * from users where email = '$email'";
+            $result3 = mysqli_query($conn,$sql3);
+            if($result3 or die("error")) {
+                $row = mysqli_fetch_assoc($result3);
+                $_SESSION['user_id'] = $row['id'];
+            }
         }
     }
-//        $pass = decrypt($password2,'1234567891011121','WebProject');
+    
+    //        $pass = decrypt($password2,'1234567891011121','WebProject');
     ?>
-        <div class = 'row'>
-            <div class = 'shadow col-md-6 mt-5'>
-                 <p class = 'edit'>Sign Up</p>
-                <br>    
-                <form action='' method='post'>
-            
-            <form action='' method='post'>
-            <div class='form-group'>
-            <div class = 'warning'> </div>
-            <label for='fname'>First Name:</label>
-            <input type='text' class='form-control' id='fname' placeholder='First Name' name = 'fname' value = ''>
-            </div>
-          <div class='form-group'>
-              <div class = 'warning'>  </div>
-            <label for='sname'>Second Name:</label>
-            <input type='text' class='form-control' id='sname' placeholder='Second Name' name = 'sname' value = ''>
-          </div>
-          <div class='form-group'>
-          <div class = 'warning'>  </div>
-            <label for='uname'>Email:</label>
-            <input type='email' class='form-control' id='Email' placeholder='Email' name = 'Email' value = ''>
-          </div>
-          <div class='form-group'>
-          <div class = 'warning'>  </div>
-            <label for='uname'>Username:</label>
-            <input type='text' class='form-control' id='uname' placeholder='Username' name = 'uname' value = ''>
-          </div>
-          <div class='form-group'>
-          <div class = 'warning'>  </div>
-            <label for='Password'>Password:</label>
-            <input type='Password' class='form-control' id='Password' name = 'pass' placeholder='Password' value = ''>
-          </div>
-          <div class='form-group'>
-          <div class = 'warning'>  </div>
-            <label for='conPassword'>Confirm Password:</label>
-            <input type='conPassword' class='form-control' id='conPassword' name = 'conpass' placeholder='Confirm Password' value = ''>
+    <div class='row'>
+        <div class='shadow col-md-6 mt-5'>
+            <p class='edit'>Sign Up</p>
+            <br>
+            <form action='' method='post' enctype="multipart/form-data">
+                    <div class='form-group'>
+                        <div class='warning'> </div>
+                        <label for='fname'>First Name:</label>
+                        <input type='text' class='form-control' id='fname' placeholder='First Name' name='fname' value=''>
+                    </div>
+                    <div class='form-group'>
+                        <div class='warning'> </div>
+                        <label for='sname'>Second Name:</label>
+                        <input type='text' class='form-control' id='sname' placeholder='Second Name' name='sname' value=''>
+                    </div>
+                    <div class='form-group'>
+                        <div class='warning'> </div>
+                        <label for='uname'>Email:</label>
+                        <input type='email' class='form-control' id='Email' placeholder='Email' name='Email' value=''>
+                    </div>
+                    <div class='form-group'>
+                        <div class='warning'> </div>
+                        <label for='uname'>Username:</label>
+                        <input type='text' class='form-control' id='uname' placeholder='Username' name='uname' value=''>
+                    </div>
+                    <div class='form-group'>
+                        <div class='warning'> </div>
+                        <label for='Password'>Password:</label>
+                        <input type='Password' class='form-control' id='Password' name='pass' placeholder='Password' value=''>
+                    </div>
+                    <div class='form-group'>
+                        <div class='warning'> </div>
+                        <label for='conPassword'>Confirm Password:</label>
+                        <input type='conPassword' class='form-control' id='conPassword' name='conpass' placeholder='Confirm Password' value=''>
+                    </div>
+                    <div class='form-group'>
+                        <div class='warning'> </div>
+
+                        <label for='nationalId'>National ID:</label>
+                        <input type='file' class='form-control' id='nationalId' name='nationalId' placeholder='PDF'>
+                        <p style='font-size: 15px;'>Please make sure to upload a clear <b style='color:red;'>PDF</b> picture of your National ID</p>
+                    </div>
+                    <div class='center2'>
+                        <button type='submit' name='sub' class='btn btn-warning'>Submit</button>
+                    </div>
+                </form>
         </div>
-        <div class='form-group'>
-        <div class = 'warning'>  </div>
-              
-            <label for='nationalId'>National ID:</label>
-            <input type='file' class='form-control' id='nationalId' name = 'nationalId' placeholder='PDF' value = ''>
-            <p style = 'font-size: 15px;'>Please make sure to upload a clear <b style = 'color:red;'>PDF</b> picture of your National ID</p>
-          </div>
-         <div class = 'center2'>
-             <button type='submit' name = 'sub' class='btn btn-warning'>Submit</button>
-            </div>
-        </form>
-            </div>
-        </div>
+    </div>
 </body>
 
 </html>
