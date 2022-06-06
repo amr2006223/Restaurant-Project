@@ -2,9 +2,9 @@
 <html lang="en">
 
 <head>
-<?php session_start();
-$_SESSION['o'] = 1;
-?>
+    <?php session_start();
+    $_SESSION['o'] = 1;
+    ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -35,15 +35,22 @@ $_SESSION['o'] = 1;
     </script>
 </head>
 <style>
-    .button{
+    .button {
         border: none;
-        background-color: red;
+        color:white;
+        background-color: grey;
     }
-    .list{
+
+    .list li{
+        padding-right: 24px;
+        float:left;
+        list-style: none;
         
-        background-color: red;
-        width: 70%;
-        max-height: fit-content;
+    }
+    .menubar{
+        display: block;
+        height: 100px;
+       
     }
 </style>
 <?php
@@ -58,64 +65,55 @@ require_once('Back End/php/CreateDb.php');
             alert("items has been added to the cart");
         }
     </script>
-    
+
     <?php include 'Front end/nav.php'; ?>
     <?php
 
 
     //menu("breakfast");
     unset($_SESSION['o']);
-    $category = "breakfast";
+    $category = '1';
     if (isset($_POST['add'])) {
         $category = $_POST['category'];
     }
     if (isset($_POST['breakfast_submit'])) {
-        $category = 'breakfast';
+        $category = '1';
     } else if (isset($_POST['lunch_submit'])) {
-        $category = 'lunch';
+        $category = '2';
     } else if (isset($_POST['dinner_submit'])) {
-        $category = "dinner";
+        $category = "3";
     } else if (isset($_POST['Compose_submit'])) {
-        $category = 'Compose';
+        $category = '4';
     }
-    
+
     ?>
-<div class = 'row'>
+    
 
 
-    <div style = 'align-items: left; width:20%' class=''>
-        <form action="" method="post">
-            <ul class = list>
-
-                <li>
-                    <input class='button' type="submit" value="Breakfast" name=breakfast_submit>
-                </li>
-                <li>
-                    <input class='button' type="submit" value="lunch" name=lunch_submit>
-                </li>
-                <li>
-                    <input class='button' type="submit" value="dinner" name=dinner_submit>
-                </li>
-                <li>
-                    <input class='button' type="submit" value="Compose a Sandwich" name=Compose_submit>
-                </li>
-            </ul>
-            <input type="hidden" value="breakfast" name=breakfast>
-            <br>
-            <input type="hidden" value="lunch" name=lunch>
-            <br>
-            <input type="hidden" value="dinner" name=dinner>
-            <br>
-            <input type="hidden" value="Compose" name=Compose>
-            <br>
-            
-        </form>
-    </div>
+        <div class='menubar'>
+            <form action="" method="post">
+                <ul class=list>
+                    <li>
+                        <input class='button' type="submit" value="Breakfast" name=breakfast_submit>
+                    </li>
+                    <li>
+                        <input class='button' type="submit" value="lunch" name=lunch_submit>
+                    </li>
+                    <li>
+                        <input class='button' type="submit" value="dinner" name=dinner_submit>
+                    </li>
+                    <li>
+                        <input class='button' type="submit" value="Compose a Sandwich" name=Compose_submit>
+                    </li>
+                </ul>
+            </form>
+        </div>
 
 
         <div class='container shadow'>
             <?php
-            $result = getData($category, $conn);
+            $sql = "select * from item where category_id = '$category'";
+            $result = mysqli_query($conn, $sql);
             $row_num = mysqli_num_rows($result);
 
             for ($i = 0; $i < ($row_num / 2) - 1; $i++) {
@@ -134,8 +132,8 @@ require_once('Back End/php/CreateDb.php');
             echo "</div>";
             ?>
 
-    </div>
-    </div>
+        </div>
+
 
     <?php
     // huge error it keeps adding stuff again and again without checking if it is in the array
@@ -144,29 +142,30 @@ require_once('Back End/php/CreateDb.php');
             if (array_search($_POST['product_id'], array_column($_SESSION['cart'], 'product_id'))) { //when it retunrs the first index so it add it again???
                 $element =
                     "<div class='center' id = 'center'>
-        <div class='content'>
-        <div class='header'>
-        <h2>Failed</h2>
-        </div>
-        <p>Item is already in cart</p>
-        <div class='line'></div>
-        <button onclick='change_id()' class = 'close-btn' > Close </button>
-        </div>
-        </div>";
+                        <div class='content'>
+                            <div class='header'>
+                                <h2>Failed</h2>
+                            </div>
+                            <p>Item is already in cart</p>
+                            <div class='line'></div>
+                            <button onclick='change_id()' class = 'close-btn' > Close </button>
+                        </div>
+                    </div>";
                 echo $element;
             } else {
                 echo '<script> al() </script>';
-                $count = count($_SESSION['cart']);
+                $count = count($_SESSION['cart']) - 1;
                 $count++;
-                $_SESSION['cart'][$count] = array('product_id' => $_POST['product_id'], 'quantity' => 1, 'catagory' => $category);;
+                echo $count;
+                $_SESSION['cart'][$count] = array('product_id' => $_POST['product_id'], 'quantity' => 1, 'catagory' => $category);
                 //$item_array = array('product_id' => $_POST['product_id']);
             }
         } else {
             echo '<script> al() </script>';
             //$item_array = array('product_id' => $_POST['product_id']);
 
-            $_SESSION['cart'][0] = array('product_id' => 0, 'quantity' => 0, 'catagory' => 'breakfast');
-            $_SESSION['cart'][1] = array('product_id' => $_POST['product_id'], 'quantity' => 1, 'catagory' => $category);
+            $_SESSION['cart'][0] = array('product_id' => 0, 'quantity' => 0, 'category' => '0');
+            $_SESSION['cart'][1] = array('product_id' => $_POST['product_id'], 'quantity' => 1, 'category' => $category);
         }
     }
     print_r($_SESSION);
