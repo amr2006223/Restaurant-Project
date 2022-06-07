@@ -35,9 +35,7 @@
 
 
     <!-- function that dispaly table attributes of the database -->
-    <?php
-    session_start();
-    ?>
+   
 </head>
 <script>
     function change_id() {
@@ -127,3 +125,4 @@
 </body>
 
 </html>
+
