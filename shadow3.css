@@ -1,0 +1,176 @@
+    .shadow {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        height: 360px;
+        padding-top: 30px;
+        border-radius: 30px;
+        width: 40%;
+    }
+
+    .edit {
+        font-weight: bold;
+        font-size: large;
+        text-align: center;
+    }
+
+    .center2 {
+        padding-left: 41.5%;
+    }
+
+    .table {
+        background-color: white;
+        transition: .5s;
+    }
+
+    th,
+    tr {
+        transition: .5s;
+    }
+
+    .row {
+        padding-top: 4%;
+    }
+
+    .th:hover,
+    tr:hover {
+        background-color: rgba(0, 0, 0, 0.208);
+    }
+
+    .link,
+    .block,
+    .unblock {
+        background-color: rgba(0, 0, 0, 0.208);
+        border: none;
+        display: inline-block;
+        width: 90%;
+        border-radius: 5px;
+        font-weight: bold;
+    }
+
+    .block {
+        background-color: red;
+        transition: .5s;
+    }
+
+    .unblock {
+        background-color: green;
+        transition: .5s;
+    }
+
+    .block:hover {
+        background-color: rgba(167, 0, 0, 0.996);
+    }
+
+    .unblock:hover {
+        background-color: rgb(1, 99, 1);
+    }
+
+    .center,
+    .content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        user-select: none;
+        z-index: 9;
+    }
+
+    #center_dis {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .content {
+        height: 230px;
+        width: 400px;
+        background: white;
+        border-radius: 3px;
+        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .4);
+        transition: .3s ease-in;
+        user-select: auto;
+
+    }
+
+    .content:focus {
+        visibility: visible;
+    }
+
+    .click-me:focus~.content {
+        opacity: 1;
+        visibility: visible;
+        user-select: none;
+    }
+
+    p {
+        padding-top: 10px;
+        font-size: 19px;
+        color: #1a1a1a;
+        text-align: center;
+
+    }
+
+    .line {
+        position: absolute;
+        bottom: 60px;
+        width: 100%;
+        height: 1px;
+        background: silver;
+
+    }
+
+    .btn {
+        margin-top: 30px;
+    }
+
+    .close-btn {
+        position: absolute;
+        bottom: 12px;
+        right: 25px;
+        border: 1px solid black;
+        border-radius: 3px;
+        color: black;
+        padding: 8px 10px;
+        font-size: 18px;
+        cursor: pointer;
+        background-color: white;
+    }
+
+    .yes-btn {
+        position: absolute;
+        bottom: 12px;
+        right: 100px;
+        border: 1px solid black;
+        border-radius: 3px;
+        color: black;
+        padding: 8px 10px;
+        font-size: 18px;
+        cursor: pointer;
+        background-color: white;
+    }
+
+    .close-btn:hover,
+    .yes-btn:hover {
+        background: orange;
+        color: white;
+        transition: .5s;
+    }
+
+    .header {
+        height: 68px;
+        background: orange;
+        overflow: hidden;
+        border-radius: 3px 3px 0 0;
+        box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .2);
+    }
+
+    .warning {
+        font-size: small;
+        text-align: left;
+        color: red;
+        height: 1px;
+        margin-bottom: 20px;
+        margin-top: -10px;
+    }
+
+    .a {
+        float: right;
+    }
