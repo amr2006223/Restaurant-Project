@@ -68,7 +68,11 @@ require_once('Back End/php/CreateDb.php');
 
     <?php include 'Front end/nav.php'; ?>
     <?php
-
+    if(!isset($_SESSION['role'])){
+        $_SESSION['menu'] = 'false';
+        header("location:Signup.php");
+    }
+    print_r($_SESSION);
 
     //menu("breakfast");
     unset($_SESSION['o']);

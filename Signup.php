@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+session_start();
+?>
 
 <head>
     <meta charset="UTF-8">
@@ -23,6 +26,7 @@
     <link rel="stylesheet" href="../../Resources/CSS/nave.css">
     <link rel="stylesheet" href="../../Resources/CSS/cardStyle.css">
     <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="shadow2.css">
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -34,9 +38,7 @@
 
 
     <!-- function that dispaly table attributes of the database -->
-    <?php
-    session_start();
-    ?>
+
 </head>
 <script>
     function change_id() {
@@ -44,174 +46,7 @@
     }
 </script>
 <style>
-    .shadow {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        height: 780px;
-        padding-top: 30px;
-        border-radius: 30px;
-        width: 40%;
-    }
 
-    .edit {
-        font-weight: bold;
-        font-size: large;
-        text-align: center;
-    }
-
-    .center2 {
-        padding-left: 41.5%;
-    }
-
-    .table {
-        background-color: white;
-        transition: .5s;
-    }
-
-    th,
-    tr {
-        transition: .5s;
-    }
-
-    .row {
-        padding-top: 4%;
-    }
-
-    .th:hover,
-    tr:hover {
-        background-color: rgba(0, 0, 0, 0.208);
-    }
-
-    .link,
-    .block,
-    .unblock {
-        background-color: rgba(0, 0, 0, 0.208);
-        border: none;
-        display: inline-block;
-        width: 90%;
-        border-radius: 5px;
-        font-weight: bold;
-    }
-
-    .block {
-        background-color: red;
-        transition: .5s;
-    }
-
-    .unblock {
-        background-color: green;
-        transition: .5s;
-    }
-
-    .block:hover {
-        background-color: rgba(167, 0, 0, 0.996);
-    }
-
-    .unblock:hover {
-        background-color: rgb(1, 99, 1);
-    }
-
-    .center,
-    .content {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        user-select: none;
-        z-index: 9;
-    }
-
-    #center_dis {
-        opacity: 0;
-        visibility: hidden;
-    }
-
-    .content {
-        height: 230px;
-        width: 400px;
-        background: white;
-        border-radius: 3px;
-        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .4);
-        transition: .3s ease-in;
-        user-select: auto;
-
-    }
-
-    .content:focus {
-        visibility: visible;
-    }
-
-    .click-me:focus~.content {
-        opacity: 1;
-        visibility: visible;
-        user-select: none;
-    }
-
-    p {
-        padding-top: 10px;
-        font-size: 19px;
-        color: #1a1a1a;
-        text-align: center;
-
-    }
-
-    .line {
-        position: absolute;
-        bottom: 60px;
-        width: 100%;
-        height: 1px;
-        background: silver;
-
-    }
-
-    .close-btn {
-        position: absolute;
-        bottom: 12px;
-        right: 25px;
-        border: 1px solid black;
-        border-radius: 3px;
-        color: black;
-        padding: 8px 10px;
-        font-size: 18px;
-        cursor: pointer;
-        background-color: white;
-    }
-
-    .yes-btn {
-        position: absolute;
-        bottom: 12px;
-        right: 100px;
-        border: 1px solid black;
-        border-radius: 3px;
-        color: black;
-        padding: 8px 10px;
-        font-size: 18px;
-        cursor: pointer;
-        background-color: white;
-    }
-
-    .close-btn:hover,
-    .yes-btn:hover {
-        background: orange;
-        color: white;
-        transition: .5s;
-    }
-
-    .header {
-        height: 68px;
-        background: orange;
-        overflow: hidden;
-        border-radius: 3px 3px 0 0;
-        box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .2);
-    }
-
-    .warning {
-        font-size: small;
-        text-align: left;
-        color: red;
-        height: 1px;
-        margin-bottom: 20px;
-        margin-top: -10px;
-    }
 </style>
 
 <body>
@@ -221,6 +56,21 @@
     include "Back End/php/functions.php";
     ?>
     <?php
+    if (!isset($_SESSION['role']) && isset($_SESSION['menu'])) {
+        $element =
+            "<div class='center' id = 'center'>
+                        <div class='content'>
+                            <div class='header'>
+                                <h2>Sign up</h2>
+                            </div>
+                            <p>You need to sign up before ordering</p>
+                            <div class='line'></div>
+                            <button onclick='change_id()' class = 'close-btn' > Close </button>
+                        </div>
+                    </div>";
+        echo $element;
+        unset($_SESSION['menu']);
+    }
     if (isset($_POST['sub'])) {
         $firstname = $_POST['fname'];
         $secondname = $_POST['sname'];
@@ -246,10 +96,29 @@
         $row_num = mysqli_num_rows($result);
        // if($num)
         */
-        $sql2 = "INSERT into users (firstname,secondname,email,username,password,nationalId) VALUES ('$firstname','$secondname','$email','$username','$password2','$nationalid')";
-        $result2 = mysqli_query($conn, $sql2);
-        if ($result2) {
+        $sql = "select * from users where email = '$email'";
+        $result = mysqli_query($conn, $sql);
+        $row_num = mysqli_num_rows($result);
+        if ($row_num > 0) {
             echo "
+            <div class='center' id = 'center'>
+            <div class='content'>
+            <div class='header'>
+            <h2 style = 'text-align: center'>Failed</h2>
+            </div>
+            <p style = 'align-text:center;'>Email is already used</p>
+            <p style = 'align-text:center;'>Please try a diffrent email address</p>
+
+            <div class='line'></div>
+            <a href = 'login.php' onclick='change_id()' class = 'close-btn' > Close </a>
+            </div>
+            </div>";
+        } else {
+
+            $sql2 = "INSERT into users (firstname,secondname,email,username,password,nationalId) VALUES ('$firstname','$secondname','$email','$username','$password2','$nationalid')";
+            $result2 = mysqli_query($conn, $sql2);
+            if ($result2) {
+                echo "
             <div class='center' id = 'center'>
             <div class='content'>
             <div class='header'>
@@ -257,18 +126,19 @@
             </div>
             <p>You have signed up sucessfully</p>
             <div class='line'></div>
-            <a href = 'Home.html' onclick='change_id()' class = 'close-btn' > Close </a>
+            <a href = 'login.php' onclick='change_id()' class = 'close-btn' > Close </a>
             </div>
             </div>";
-            $sql3 = "select * from users where email = '$email'";
-            $result3 = mysqli_query($conn,$sql3);
-            if($result3 or die("error")) {
-                $row = mysqli_fetch_assoc($result3);
-                $_SESSION['user_id'] = $row['id'];
+                $sql3 = "select * from users where email = '$email'";
+                $result3 = mysqli_query($conn, $sql3);
+                if ($result3 or die("error")) {
+                    $row = mysqli_fetch_assoc($result3);
+                    $_SESSION['user_id'] = $row['id'];
+                }
             }
         }
     }
-    
+
     //        $pass = decrypt($password2,'1234567891011121','WebProject');
     ?>
     <div class='row'>
@@ -276,47 +146,48 @@
             <p class='edit'>Sign Up</p>
             <br>
             <form action='' method='post' enctype="multipart/form-data">
-                    <div class='form-group'>
-                        <div class='warning'> </div>
-                        <label for='fname'>First Name:</label>
-                        <input type='text' class='form-control' id='fname' placeholder='First Name' name='fname' value=''>
-                    </div>
-                    <div class='form-group'>
-                        <div class='warning'> </div>
-                        <label for='sname'>Second Name:</label>
-                        <input type='text' class='form-control' id='sname' placeholder='Second Name' name='sname' value=''>
-                    </div>
-                    <div class='form-group'>
-                        <div class='warning'> </div>
-                        <label for='uname'>Email:</label>
-                        <input type='email' class='form-control' id='Email' placeholder='Email' name='Email' value=''>
-                    </div>
-                    <div class='form-group'>
-                        <div class='warning'> </div>
-                        <label for='uname'>Username:</label>
-                        <input type='text' class='form-control' id='uname' placeholder='Username' name='uname' value=''>
-                    </div>
-                    <div class='form-group'>
-                        <div class='warning'> </div>
-                        <label for='Password'>Password:</label>
-                        <input type='Password' class='form-control' id='Password' name='pass' placeholder='Password' value=''>
-                    </div>
-                    <div class='form-group'>
-                        <div class='warning'> </div>
-                        <label for='conPassword'>Confirm Password:</label>
-                        <input type='conPassword' class='form-control' id='conPassword' name='conpass' placeholder='Confirm Password' value=''>
-                    </div>
-                    <div class='form-group'>
-                        <div class='warning'> </div>
+                <div class='form-group'>
+                    <div class='warning'> </div>
+                    <label for='fname'>First Name:</label>
+                    <input type='text' class='form-control' id='fname' placeholder='First Name' name='fname' value=''>
+                </div>
+                <div class='form-group'>
+                    <div class='warning'> </div>
+                    <label for='sname'>Second Name:</label>
+                    <input type='text' class='form-control' id='sname' placeholder='Second Name' name='sname' value=''>
+                </div>
+                <div class='form-group'>
+                    <div class='warning'> </div>
+                    <label for='email'>Email:</label>
+                    <input type='email' class='form-control' id='Email' placeholder='Email' name='Email' value=''>
+                </div>
+                <div class='form-group'>
+                    <div class='warning'> </div>
+                    <label for='uname'>Username:</label>
+                    <input type='text' class='form-control' id='uname' placeholder='Username' name='uname' value=''>
+                </div>
+                <div class='form-group'>
+                    <div class='warning'> </div>
+                    <label for='Password'>Password:</label>
+                    <input type='Password' class='form-control' id='Password' name='pass' placeholder='Password' value=''>
+                </div>
+                <div class='form-group'>
+                    <div class='warning'> </div>
+                    <label for='conPassword'>Confirm Password:</label>
+                    <input type='conPassword' class='form-control' id='conPassword' name='conpass' placeholder='Confirm Password' value=''>
+                </div>
+                <div class='form-group'>
+                    <div class='warning'> </div>
 
-                        <label for='nationalId'>National ID:</label>
-                        <input type='file' class='form-control' id='nationalId' name='nationalId' placeholder='PDF'>
-                        <p style='font-size: 15px;'>Please make sure to upload a clear <b style='color:red;'>PDF</b> picture of your National ID</p>
-                    </div>
-                    <div class='center2'>
-                        <button type='submit' name='sub' class='btn btn-warning'>Submit</button>
-                    </div>
-                </form>
+                    <label for='nationalId'>National ID:</label>
+                    <input type='file' class='form-control' id='nationalId' name='nationalId' placeholder='PDF'>
+                    <p style='font-size: 15px;'>Please make sure to upload a clear <b style='color:red;'>PDF</b> picture of your National ID</p>
+                    <a class='a' href="login.php">already have an account?</a>
+                </div>
+                <div class='center2'>
+                    <button type='submit' name='sub' class='btn btn-warning'>Submit</button>
+                </div>
+            </form>
         </div>
     </div>
 </body>
