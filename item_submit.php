@@ -31,17 +31,19 @@
     <?php require_once('./Back End/php/CreateDb.php'); ?>
 <body>
 
-    <div class='row'>
+<div class='row'>
         <div class='shadow col-md-4 mt-5'>
             <p class='edit'>Check</p>
             <br>
-            <form action='' method='post' enctype="multipart/form-data">
+            <form action='end.php' method='post' enctype="multipart/form-data">
+           
+                    <div class='form-group'>
+                        <div class='warning'> </div>
                 <?php
-            
+            $space = " ";
                 $array = $_SESSION['cart'];
-                $sum = 0;
                 $i = 0;
-                
+                $sum = 0;
                 for($i = 0; $i<count($_SESSION['cart']);$i++){
                     $id = $array[$i]['product_id'];
                     $sql = "select * from item where id = '$id'";
@@ -50,17 +52,19 @@
                     if($row_num == 0) continue;
                     if($result){
                         $row = mysqli_fetch_assoc($result);
+                        $name = $row['name'];
                         $price = $row['price'];
                         $sum+=$price;
                     }
+                    echo "<label for='price'>Item name: $name &nbsp</label>";
+                    echo "<label for='price'>Item price: $price &nbsp</label> <br>";
                 }
-                echo "
-                    <div class='form-group'>
-                        <div class='warning'> </div>
-                        <label for='price'>The Total Price is $sum $</label>
-                    </div>
+               
+                      
+                        echo "<label for='price'>The Total Price is $sum $</label>";
+                    echo "</div>
                     <br>
-                    <br>"
+                    <br>";
                     ?>
                    
                     <div class='center2'>

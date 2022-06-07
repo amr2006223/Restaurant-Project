@@ -66,7 +66,7 @@
         $sql = "select * from users where username = '$email' && password = '$password2'";
         $result = mysqli_query($conn, $sql);
         $row_num_user = mysqli_num_rows($result);
-        $sql2 = "select * from cashier where username = '$email' && password = '$password2'";
+        $sql2 = "select * from cashier where username = '$email' && password = '$password'";
         $result2 = mysqli_query($conn, $sql2);
         $row_num_cash = mysqli_num_rows($result2);
         $sql3 = "select * from qualitycontrol where username = '$email' && password = '$password'";

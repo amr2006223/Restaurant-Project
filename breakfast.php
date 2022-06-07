@@ -2,9 +2,7 @@
 <html lang="en">
 
 <head>
-    <?php session_start();
-    $_SESSION['o'] = 1;
-    ?>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -65,14 +63,17 @@ require_once('Back End/php/CreateDb.php');
             alert("items has been added to the cart");
         }
     </script>
-
+<?php session_start();?>
+    <?php
+    $_SESSION['o'] = 1;
+    ?>
     <?php include 'Front end/nav.php'; ?>
     <?php
     if(!isset($_SESSION['role'])){
         $_SESSION['menu'] = 'false';
         header("location:Signup.php");
     }
-    print_r($_SESSION);
+
 
     //menu("breakfast");
     unset($_SESSION['o']);

@@ -1,4 +1,7 @@
 <?php
+if(!isset($_SESSION)){
+    session_start();
+}
 echo "
 <header>
 <nav>
@@ -19,7 +22,7 @@ echo "
                 <ul class = 'main-Nav'>
                     <li><a href='Home.php'>Home</a></li>                                                               
                     <li><a href='breakfast.php'>Menu</a></li>                                           
-                    <li><a href='ContactUs.html'>Contact Us</a></li>                        
+                    <li><a href='Orders.php'>Orders</a></li>                        
                     <li><a href='Signout.php'>Sign out</a></li>                        
                                           
                 </ul>";
