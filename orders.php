@@ -21,6 +21,8 @@
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.css" />
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
     <!-- custom stylesheets -->
     <link rel="stylesheet" href="Resources/CSS/nave.css">
     <link rel="stylesheet" href="Resources/CSS/cardStyle.css">
@@ -81,6 +83,9 @@ require_once('Back End/php/CreateDb.php');
             $sql = "select * from orders order by order_id";
             $result = mysqli_query($conn, $sql);
             echo '<table border="1">';
+            
+            echo '<table class="table table-striped">';
+                echo '<thead>';
                 echo '<tr>';
                     echo '<th>Order ID</th>';
                     echo '<th>Order Status</th>';
