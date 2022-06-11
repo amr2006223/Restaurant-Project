@@ -59,11 +59,7 @@ require_once('Back End/php/CreateDb.php');
 ?>
 
 <body>
-    <script>
-        function al() {
-            alert("items has been added to the cart");
-        }
-    </script>
+    
 <?php session_start();?>
     <?php
     $_SESSION['o'] = 1;
@@ -72,7 +68,12 @@ require_once('Back End/php/CreateDb.php');
     <?php
     if(!isset($_SESSION['role'])){
         $_SESSION['menu'] = 'false';
-        header("location:Signup.php");
+        header("location:login.php");
+    } else {
+        if($_SESSION['role'] != 'cashier'){
+            $_SESSION['menu'] = 'false';
+            header("location:login.php");
+        }
     }
 
     ?>
@@ -82,7 +83,7 @@ require_once('Back End/php/CreateDb.php');
             <?php
             $sql = "select * from orders order by order_id";
             $result = mysqli_query($conn, $sql);
-            echo '<table border="1">';
+            echo '<table>';
             
             echo '<table class="table table-striped">';
                 echo '<thead>';
@@ -90,6 +91,9 @@ require_once('Back End/php/CreateDb.php');
                     echo '<th>Order ID</th>';
                     echo '<th>Order Status</th>';
                     echo '<th>Total Price</th>';
+                    echo '<th></th>';
+                    echo '<th></th>';
+                    echo '<th></th>';
                 echo '</tr>';
 
             while($orderData = mysqli_fetch_array($result)){
@@ -104,10 +108,14 @@ require_once('Back End/php/CreateDb.php');
                 }
                     echo '<td>'.$orderData['price'].'</td>';
         
-       
-        
-        echo "<td><a href='delete-order.php?order_id=".$orderData['order_id']."'>Delete</a></td>";
-        echo "<td><a href='view_order.php?order_id=".$orderData['order_id']."'>View</a></td>";
+                if($orderData['status'] == 0)
+                {
+                        echo "<td><a href='confirm-order.php?order_id=".$orderData['order_id']."' class='confirm'>Confirm</a></td>";
+                }else {
+                    echo "<td></td>";
+                }  
+        echo "<td><a href='delete-order.php?order_id=".$orderData['order_id']."' class='delete'>Delete</a></td>";
+        echo "<td><a href='view_order.php?order_id=".$orderData['order_id']."' class='view'>View</a></td>";
     echo '</tr>';
 
 }

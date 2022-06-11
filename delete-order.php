@@ -28,11 +28,7 @@
     <link rel="stylesheet" href="Resources/CSS/cardStyle.css">
     <link rel="stylesheet" href="style.css">
 
-    <script>
-        function change_id() {
-            document.getElementById("center").setAttribute("id", "center_dis");
-        }
-    </script>
+    
 </head>
 <style>
     .button {
@@ -64,13 +60,17 @@ require_once('Back End/php/CreateDb.php');
 <?php session_start();?>
     <?php
     $_SESSION['o'] = 1;
-    $PIN = 2203;
     ?>
     <?php include 'Front end/nav.php'; ?>
     <?php
     if(!isset($_SESSION['role'])){
         $_SESSION['menu'] = 'false';
-        header("location:Signup.php");
+        header("location:login.php");
+    } else {
+        if($_SESSION['role'] != 'cashier'){
+            $_SESSION['menu'] = 'false';
+            header("location:login.php");
+        }
     }
 
     ?>
@@ -78,6 +78,13 @@ require_once('Back End/php/CreateDb.php');
     
         <div class='container shadow'>
             <?php
+            $manager_id = 1;
+            $sql_pin = "select PIN from qualitycontrol where id = '$manager_id'";
+            $result_pin = mysqli_query($conn, $sql_pin);
+            while($pin_data = mysqli_fetch_array($result_pin)){
+                $PIN = $pin_data['PIN'];
+            }
+
             if(isset($_GET['order_id'])){
                 $order_id = $_GET['order_id'];
             }
@@ -92,7 +99,7 @@ require_once('Back End/php/CreateDb.php');
                 $result_deleteanditems = mysqli_query($conn, $sql_deleteanditems);
                 if($result_delete && $result_deleteanditems)
                 {
-                    echo 'success';
+                    echo 'Order deleted successfully';
                 }
                 
             } else {
@@ -118,7 +125,7 @@ require_once('Back End/php/CreateDb.php');
                     $result_deleteanditems = mysqli_query($conn, $sql_deleteanditems);
                     if($result_delete && $result_deleteanditems)
                     {
-                        echo 'success';
+                        echo 'Order deleted successfully';
                     }
                 } else {
                     echo 'WRONG PIN';

@@ -170,3 +170,50 @@ transition: .5s;
 .shadow{
     padding-top: 3%;
 }
+
+
+.confirm {
+    background-color:#28a745;
+    color: #FFFFFF;
+    text-decoration: none;
+    padding: 0.3em 0.8em;
+
+}
+
+.confirm:hover {
+    background-color:#19dc46;
+    color: #FFFFFF;
+    text-decoration: none;
+
+}
+
+
+.delete {
+    background-color:#dc3545;
+    color: #FFFFFF;
+    text-decoration: none;
+    padding: 0.3em 0.8em;
+
+}
+
+.delete:hover {
+    background-color:#9d343e;
+    color: #FFFFFF;
+    text-decoration: none;
+
+}
+
+.view {
+    background-color:#007bff;
+    color: #FFFFFF;
+    text-decoration: none;
+    padding: 0.3em 0.8em;
+
+}
+
+.view:hover {
+    background-color:rgb(82, 52, 157);
+    color: #FFFFFF;
+    text-decoration: none;
+
+}

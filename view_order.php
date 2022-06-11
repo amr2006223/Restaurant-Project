@@ -61,21 +61,26 @@ require_once('Back End/php/CreateDb.php');
 ?>
 
 <body>
-    <script>
-        function al() {
-            alert("items has been added to the cart");
-        }
-    </script>
 <?php session_start();?>
     <?php
     $_SESSION['o'] = 1;
     ?>
-    <?php include 'Front end/nav.php'; ?>
-    <?php
+    <?php include 'Front end/nav.php';
+
+    
     if(!isset($_SESSION['role'])){
         $_SESSION['menu'] = 'false';
-        header("location:Signup.php");
+        header("location:login.php");
+    } else {
+        if($_SESSION['role'] != 'cashier'){
+            $_SESSION['menu'] = 'false';
+            header("location:login.php");
+        }
     }
+
+    ?>
+
+    <?php
 
     if(isset($_GET['order_id'])){
         $order_id = $_GET['order_id'];
@@ -100,7 +105,7 @@ require_once('Back End/php/CreateDb.php');
                 echo '</tr>';
             
             while($orderData = mysqli_fetch_array($result)){
-            echo '<form action="delete.php" method="POST">';
+            echo '<form action="" method="POST">';
             echo '<tr>';
                 $item_id = $orderData['item_id'];
                 $quantity = $orderData['quantity'];
