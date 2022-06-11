@@ -72,7 +72,7 @@
             if($items['product_id'] == 0){
                 $counter++;
                 if($counter == count($_SESSION['cart'])){
-                    session_unset();
+                    unset($_SESSION['cart']);
                     $counter == -1;
                     echo "<p class = 'no_item'>No items in the cart</p>";
                 }

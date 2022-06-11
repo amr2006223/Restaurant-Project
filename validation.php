@@ -9,10 +9,10 @@ function sanitize($text)
     return $text;
 }
 
-function validate($data, $type, $code,$conPass = '')
+function validate($data, $type, $code, $conPass = '')
 {
     if ($type == 'String') {
-        if ($data == '') {
+        if (empty($data)) {
             echo $code . "Name is required,";
             $GLOBALS['check'] = false;
         } else {
@@ -23,20 +23,7 @@ function validate($data, $type, $code,$conPass = '')
                 $GLOBALS['check'] = false;
             }
         }
-    }else if ($type == 'String2') {
-        if ($data == '') {
-            echo $code . "Name is required,";
-            $GLOBALS['check'] = false;
-        } else {
-            //$data = sanitize($data);
-            // check if name only contains letters and whitespace
-            if (!preg_match("/^[a-zA-Z-' ]*$/", $data)) {
-                echo $code . "Invalid Only letters and white space allowed,";
-                $GLOBALS['check'] = false;
-            }
-        }
-    } 
-    else if ($type == 'Email') {
+    } else if ($type == 'Email') {
         if (empty($data)) {
             echo $code . "Email is required,";
             $GLOBALS['check'] = false;
@@ -60,8 +47,7 @@ function validate($data, $type, $code,$conPass = '')
                 $GLOBALS['check'] = false;
             }
         }
-    } 
-    elseif ($type == 'Password') {
+    } elseif ($type == 'Password') {
         if (empty($data)) {
             echo $code . "Password is required,";
         } else if ($conPass != $data) {
@@ -76,15 +62,14 @@ function validate($data, $type, $code,$conPass = '')
                 $GLOBALS['check'] = false;
             }
         }
-    }
-    else if($type == 'Image'){
-        if($data == 'none'){
-            echo $code."National ID is required,";
+    } else if ($type == 'Image') {
+        if ($data == 'none') {
+            echo $code . "National ID is required,";
             $GLOBALS['check'] = false;
-        }else{
+        } else {
             $allowed =  'application/pdf';
-            if($conPass == $allowed){
-                echo $code."Please submit you national ID as a <b style = 'color:red;'>PDF</b>,";
+            if ($conPass == $allowed) {
+                echo $code . "Please submit you national ID as a <b style = 'color:red;'>PDF</b>,";
                 $GLOBALS['check'] = false;
             }
         }
@@ -93,27 +78,24 @@ function validate($data, $type, $code,$conPass = '')
 $check = true;
 $fname = $_POST['fname'];
 $sname = $_POST['sname'];
-$Email = $_POST['Email'];
 $uname = $_POST['uname'];
+$Email = $_POST['Email'];
 $password = $_POST['Password'];
 $conpassword = $_POST['conPassword'];
-$nationalid = $_POST['NI'];
-$NTYPE = $_POST['NTYPE'];
 
 validate($fname, 'String', '1');
 validate($sname, 'String', '2');
 validate($Email, 'Email', '3');
 validate($uname, 'Username', '4');
-validate($password,'Password', '5',$conpassword);
-validate($nationalid, 'Image', '7',$NTYPE);
-
-if ($check == true) {
+validate($password, 'Password', '5', $conpassword);
+//validate($nationalid, 'Image', '7',$NTYPE);
+if (false) {
+    /*
     $_SESSION['fname'] = $fname;
     $_SESSION['sname'] = $sname;
     $_SESSION['email'] = $Email;
     $_SESSION['username'] = $username;
-    $_SESSION['nationalId'] = $nationalid;
-
+*/
     $password2 = encrypt($password, '1234567891011121', 'WebProject');
 
     /*
