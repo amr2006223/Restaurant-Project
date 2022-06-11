@@ -41,6 +41,92 @@ session_start();
 
 </head>
 <script>
+    function validate() {
+        validation();
+        validateID();
+    }
+
+    function validateID() {
+        var formData = new FormData();
+        formData.append('file', $('#nationalId')[0].files[0]);
+
+        $.ajax({
+            url: 'validate_id.php',
+            type: 'POST',
+            data: formData,
+            processData: false, // tell jQuery not to process the data
+            contentType: false, // tell jQuery not to set contentType
+            success: function(data) {
+                if (data == 1)
+                    $('#nationalId_check').html("");
+                else if (data == 0)
+                    $('#nationalId_check').html("National id required");
+                else
+                    $('#nationalId_check').html("National id picture must be a pdf");
+            }
+        });
+    }
+
+    function validation() {
+        jQuery.ajax({
+            url: "validation.php",
+            data: {
+                fname: $('#fname').val(),
+                sname: $("#sname").val(),
+                uname: $("#uname").val(),
+                Email: $("#Email").val(),
+                Password: $("#Password").val(),
+                conPassword: $("#conPassword").val()
+            },
+            type: "POST",
+            success: function(data) {
+                $('#firstname').html("");
+
+
+                $('#secondname').html("");
+                $('#email_check').html("");
+                $('#username_check').html("");
+                $('#password_check').html("");
+                $('#conpassword_check').html("");
+                if (data.substring(0, 1) == '9') {
+                    $('#pop_up').html(data);
+                } else {
+                    const value = data.split(",");
+                    var length = value.length;
+                    if (value[0].substring(2, 3) == '1')
+                        $('#firstname').html(value[0].substring(3));
+                    else if (value[0].substring(2, 3) == '2')
+                        $('#secondname').html(value[0].substring(3));
+                    else if (value[0].substring(2, 3) == '3')
+                        $('#email_check').html(value[0].substring(3));
+                    else if (value[0].substring(2, 3) == '4')
+                        $('#username_check').html(value[0].substring(3));
+                    else if (value[0].substring(2, 3) == '5')
+                        $('#password_check').html(value[0].substring(3));
+                    else if (value[0].substring(2, 3) == '6')
+                        $('#conpassword_check').html(value[0].substring(3));
+
+                       
+
+                    for (let i = 1; i < length; i++) {
+                        if (value[i].substring(0, 1) == '1')
+                            $('#firstname').html(value[i].substring(1));
+                        else if (value[i].substring(0, 1) == '2')
+                            $('#secondname').html(value[i].substring(1));
+                        else if (value[i].substring(0, 1) == '3')
+                            $('#email_check').html(value[i].substring(1));
+                        else if (value[i].substring(0, 1) == '4')
+                            $('#username_check').html(value[i].substring(1));
+                        else if (value[i].substring(0, 1) == '5')
+                            $('#password_check').html(value[i].substring(1));
+                        else if (value[i].substring(0, 1) == '6')
+                            $('#conpassword_check').html(value[i].substring(1));
+                    }
+                }
+            }
+        });
+    }
+
     function change_id() {
         document.getElementById("center").setAttribute("id", "center_dis");
     }
@@ -147,37 +233,37 @@ session_start();
             <br>
             <form action='' method='post' enctype="multipart/form-data">
                 <div class='form-group'>
-                    <div class='warning'> </div>
+                    <div class='warning' id='firstname'> </div>
                     <label for='fname'>First Name:</label>
                     <input type='text' class='form-control' id='fname' placeholder='First Name' name='fname' value=''>
                 </div>
                 <div class='form-group'>
-                    <div class='warning'> </div>
+                    <div class='warning' id='secondname'> </div>
                     <label for='sname'>Second Name:</label>
                     <input type='text' class='form-control' id='sname' placeholder='Second Name' name='sname' value=''>
                 </div>
                 <div class='form-group'>
-                    <div class='warning'> </div>
+                    <div class='warning' id='email_check'> </div>
                     <label for='email'>Email:</label>
                     <input type='email' class='form-control' id='Email' placeholder='Email' name='Email' value=''>
                 </div>
                 <div class='form-group'>
-                    <div class='warning'> </div>
+                    <div class='warning' id='username_check'> </div>
                     <label for='uname'>Username:</label>
                     <input type='text' class='form-control' id='uname' placeholder='Username' name='uname' value=''>
                 </div>
                 <div class='form-group'>
-                    <div class='warning'> </div>
+                    <div class='warning' id='password_check'> </div>
                     <label for='Password'>Password:</label>
                     <input type='Password' class='form-control' id='Password' name='pass' placeholder='Password' value=''>
                 </div>
                 <div class='form-group'>
-                    <div class='warning'> </div>
+                    <div class='warning' id='conpassword_check'> </div>
                     <label for='conPassword'>Confirm Password:</label>
                     <input type='conPassword' class='form-control' id='conPassword' name='conpass' placeholder='Confirm Password' value=''>
                 </div>
                 <div class='form-group'>
-                    <div class='warning'> </div>
+                    <div class='warning' id='nationalId_check'> </div>
 
                     <label for='nationalId'>National ID:</label>
                     <input type='file' class='form-control' id='nationalId' name='nationalId' placeholder='PDF'>
@@ -185,7 +271,7 @@ session_start();
                     <a class='a' href="login.php">already have an account?</a>
                 </div>
                 <div class='center2'>
-                    <button type='submit' name='sub' class='btn btn-warning'>Submit</button>
+                    <button type='button' name='sub' class='btn btn-warning' onclick='validate()'>Submit</button>
                 </div>
             </form>
         </div>
